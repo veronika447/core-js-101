@@ -7,7 +7,6 @@
  *                                                                                            *
  ******************************************************************************************** */
 
-
 /**
  * Returns an index of the specified element in array or -1 if element is not found
  *
@@ -45,7 +44,6 @@ function generateOdds(len) {
   return arr;
 }
 
-
 /**
  * Returns the doubled array - elements of the specified array
  * are repeated twice using original order
@@ -61,7 +59,6 @@ function generateOdds(len) {
 function doubleArray(arr) {
   return arr.concat(arr);
 }
-
 
 /**
  * Returns an array of positive numbers from the specified array in original order
@@ -125,7 +122,6 @@ function getUpperCaseStrings(arr) {
   return arr.map((el) => el.toUpperCase());
 }
 
-
 /**
  * Returns the array of string lengths from the specified string array.
  *
@@ -170,7 +166,6 @@ function getHead(arr, n) {
   return arr.splice(0, n);
 }
 
-
 /**
  * Returns the n last items of the specified array
  *
@@ -184,7 +179,6 @@ function getHead(arr, n) {
 function getTail(arr, n) {
   return arr.slice(-n);
 }
-
 
 /**
  * Returns CSV representation of two-dimensional numeric array.
@@ -232,7 +226,6 @@ function toArrayOfSquares(arr) {
   return arr.map((el) => el * el);
 }
 
-
 /**
  * Transforms the numeric array to the according moving sum array:
  *     f[n] = x[0] + x[1] + x[2] +...+ x[n]
@@ -270,7 +263,6 @@ function getSecondItems(arr) {
   return arr.filter((el, index) => index % 2 === 1);
 }
 
-
 /**
  * Propagates every item in sequence its position times
  * Returns an array that consists of: one first item, two second items, three third items etc.
@@ -285,10 +277,9 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.map((el, index) => new Array(index + 1).fill(el)).flat();
 }
-
 
 /**
  * Returns the 3 largest numbers from the specified array
@@ -306,7 +297,6 @@ function propagateItemsByPositionIndex(/* arr */) {
 function get3TopItems(arr) {
   return arr.sort((a, b) => b - a).slice(0, 3);
 }
-
 
 /**
  * Returns the number of positive numbers from specified array
@@ -339,7 +329,18 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-  const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const numbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
   return arr.sort((a, b) => numbers.indexOf(a) - numbers.indexOf(b));
 }
 
@@ -408,7 +409,6 @@ function toStringList(arr) {
   return arr.join(',');
 }
 
-
 /**
  * Sorts the specified array by country name first and city name
  * (if countries are equal) in ascending order.
@@ -435,8 +435,23 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  const arr1 = arr.sort((a, b) => {
+    if (a.country < b.country) {
+      return -1;
+    }
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.city > b.city) {
+      return 1;
+    }
+    if (a.city < b.city) {
+      return -1;
+    }
+    return 0;
+  });
+  return arr1;
 }
 
 /**
@@ -457,8 +472,18 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const arr = new Array(n).fill(0).map(() => new Array(n).fill(0));
+  const matrix = arr.map((el, index) => {
+    const el1 = el.map((item, i) => {
+      if (index === i) {
+        return 1;
+      }
+      return item;
+    });
+    return el1;
+  });
+  return matrix;
 }
 
 /**
@@ -530,8 +555,20 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const arr1 = array.map(keySelector);
+  const arr2 = array.map(valueSelector);
+  const map = new Map();
+  arr1.map((el, index) => {
+    if (map.has(el)) {
+      map.get(el).push(arr2[index]);
+    }
+    if (!map.has(el)) {
+      map.set(el, new Array(arr2[index]));
+    }
+    return 0;
+  });
+  return map;
 }
 
 
@@ -552,7 +589,6 @@ function selectMany(arr, childrenSelector) {
   return arr.map(childrenSelector).flat();
 }
 
-
 /**
  * Returns an element from the multidimensional array by the specified indexes.
  *
@@ -568,7 +604,6 @@ function selectMany(arr, childrenSelector) {
 function getElementByIndexes(arr, indexes) {
   return arr.flat(indexes.length).at(indexes.at(-1));
 }
-
 
 /**
  * Swaps the head and tail of the specified array:
@@ -594,7 +629,6 @@ function swapHeadAndTail(arr) {
   const tail = arr.splice(-length, length);
   return tail.concat(arr, head);
 }
-
 
 module.exports = {
   findElement,
